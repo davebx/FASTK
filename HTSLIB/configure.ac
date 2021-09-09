@@ -275,8 +275,8 @@ xz (via Homebrew on macOS) is installed; or build XZ Utils from source.
 Either configure with --disable-lzma (which will make some CRAM files
 produced elsewhere unreadable) or resolve this error to build HTSlib.])
   fi
-  pc_requires="$pc_requires liblzma"
-  static_LIBS="$static_LIBS -llzma"
+  pc_requires="$pc_requires"
+  static_LIBS="$static_LIBS"
 fi
 
 AS_IF([test "x$with_libdeflate" != "xno"],

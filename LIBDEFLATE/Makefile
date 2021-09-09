@@ -40,21 +40,6 @@
 cc-option = $(shell if $(CC) $(1) -c -x c /dev/null -o /dev/null \
 	      1>&2 2>/dev/null; then echo $(1); fi)
 
-override CFLAGS :=							\
-	-O2 -fomit-frame-pointer $(CFLAGS) -std=c99 -I. -Icommon	\
-	-Wall -Wundef							\
-	$(call cc-option,-Wpedantic)					\
-	$(call cc-option,-Wdeclaration-after-statement)			\
-	$(call cc-option,-Wmissing-prototypes)				\
-	$(call cc-option,-Wstrict-prototypes)				\
-	$(call cc-option,-Wvla)						\
-	$(call cc-option,-Wimplicit-fallthrough)
-
-# We don't define any CPPFLAGS, but support the user specifying it.
-
-##############################################################################
-
-PREFIX ?= /usr/local
 BINDIR ?= $(PREFIX)/bin
 INCDIR ?= $(PREFIX)/include
 LIBDIR ?= $(PREFIX)/lib
@@ -76,7 +61,6 @@ ifneq ($(findstring -mingw,$(shell $(CC) -dumpmachine 2>/dev/null)),)
     PROG_SUFFIX        := .exe
     PROG_CFLAGS        := -static -municode
     HARD_LINKS         :=
-    override CFLAGS    := $(CFLAGS) $(call cc-option,-Wno-pedantic-ms-format)
 
     # If AR was not already overridden, then derive it from $(CC).
     # Note that CC may take different forms, e.g. "cc", "gcc",
